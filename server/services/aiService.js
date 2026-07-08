@@ -86,9 +86,19 @@ ${code}
 `;
 
 
-    const response = await generateWithRetry(prompt);
+    const response = await ai.models.generateContent({
+  model: process.env.GEMINI_MODEL,
+  contents: prompt,
+});
+
+console.log("========== RAW GEMINI RESPONSE ==========");
+console.log(response.text);
+console.log("=========================================");
 
     const validatedResponse = validateAIResponse(response.text);
+
+    console.log("========== VALIDATED RESPONSE ==========");
+console.log(validatedResponse);
 
     return validatedResponse;
 
