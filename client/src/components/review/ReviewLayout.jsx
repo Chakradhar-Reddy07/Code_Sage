@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 import CodeEditor from "./CodeEditor";
-import AIResponse from "./AIResponse";
+import AIResponse from "./AiResponse";
 
 function ReviewLayout() {
   const [language, setLanguage] = useState("java");
