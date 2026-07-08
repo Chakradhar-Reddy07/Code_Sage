@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================
+   Global Theme
+=========================== */
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background: #050816;
+  color: white;
+  font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(124, 58, 237, 0.18), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.15), transparent 35%),
+    #050816;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1120;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    #7c3aed,
+    #2563eb
+  );
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* ===========================
+   Selection
+=========================== */
+
+::selection {
+  background: rgba(124, 58, 237, 0.4);
+  color: white;
+}
+
+/* ===========================
+   Glass Effect
+=========================== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ===========================
+   Gradient Text
+=========================== */
+
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #3b82f6
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===========================
+   Glow
+=========================== */
+
+.glow {
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.35);
+}
+
+/* ===========================
+   Floating Animation
+=========================== */
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ===========================
+   Pulse Glow
+=========================== */
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 18px rgba(124, 58, 237, .25);
+  }
+
+  50% {
+    box-shadow:
+      0 0 45px rgba(124, 58, 237, .6);
+  }
+}
+
+.animate-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+/* ===========================
+   Fade Up
+=========================== */
+
+@keyframes fadeUp {
+
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp .8s ease forwards;
+}
+
+/* ===========================
+   Hero Background
+=========================== */
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+
+  background-size: 60px 60px;
+}
+
+/* ===========================
+   Gradient Button
+=========================== */
+
+.btn-gradient {
+  background: linear-gradient(
+    90deg,
+    #7c3aed,
+    #2563eb
+  );
+
+  transition: .3s;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 15px 40px rgba(124,58,237,.4);
+}
+
+/* ===========================
+   Card Hover
+=========================== */
+
+.card-hover {
+  transition: .35s;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+
+  border-color: rgba(139,92,246,.45);
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.4);
+}
+
+/* ===========================
+   Monaco AI Error Highlight
+=========================== */
+
+.codesage-error-line {
+  background: rgba(239,68,68,.18);
+  border-left: 4px solid #ef4444;
+}
+
+.codesage-error-glyph {
+  background: #ef4444;
+  border-radius: 50%;
+}
+
+/* ===========================
+   Utility Classes
+=========================== */
+
+.section-padding {
+  @apply px-6 md:px-10 lg:px-16 xl:px-24;
+}
+
+.container-width {
+  @apply max-w-7xl mx-auto;
+}

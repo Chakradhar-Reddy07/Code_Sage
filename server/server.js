@@ -1,0 +1,24 @@
+require("dotenv").config();
+
+const app = require("./app");
+const db = require("./config/db");
+
+const PORT = process.env.PORT || 5000;
+
+async function startServer() {
+  try {
+    await db.query("SELECT 1");
+
+    console.log("✅ MySQL Connected Successfully");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+    });
+
+  } catch (error) {
+    console.error("❌ Database Connection Failed");
+    console.error(error);
+  }
+}
+
+startServer();
