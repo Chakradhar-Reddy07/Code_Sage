@@ -14,12 +14,23 @@ async function startServer() {
 
     await initTables();
 
-    app.listen(PORT, () => {
+    const server = app.listen(PORT);
+
+    server.on("listening", () => {
       console.log(`Server running on port ${PORT}`);
     });
+
+    server.on("error", (error) => {
+      if (error.code === "EADDRINUSE") {
+        console.error(`Port ${PORT} is already in use`);
+      } else {
+        console.error("Server failed to start:", error.message);
+      }
+
+      process.exitCode = 1;
+    });
   } catch (error) {
-    console.error("Database Connection Failed");
-    console.error(error);
+    console.error("Database Connection Failed:", error.message);
     process.exitCode = 1;
   }
 }

@@ -1,5 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+
 // Public Pages
 import Landing from "./pages/Landing";
 import Signup from "./pages/Signup";
@@ -21,39 +23,79 @@ function App() {
   return (
     <Routes>
 
-      {/* Public Routes */}
-
       <Route path="/" element={<Landing />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
 
-      {/* Dashboard */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute><Dashboard /></ProtectedRoute>
+        }
+      />
 
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route
+        path="/review"
+        element={
+          <ProtectedRoute><Review /></ProtectedRoute>
+        }
+      />
 
-      {/* Review */}
-
-      <Route path="/review" element={<Review />} />
       <Route
         path="/review/history"
-        element={<ReviewHistory />}
+        element={
+          <ProtectedRoute><ReviewHistory /></ProtectedRoute>
+        }
       />
 
-      {/* Learning */}
+      <Route
+        path="/roadmap"
+        element={
+          <ProtectedRoute><Roadmap /></ProtectedRoute>
+        }
+      />
 
-      <Route path="/roadmap" element={<Roadmap />} />
-      <Route path="/analytics" element={<Analytics />} />
-      <Route path="/interview" element={<Interview />} />
+      <Route
+        path="/analytics"
+        element={
+          <ProtectedRoute><Analytics /></ProtectedRoute>
+        }
+      />
 
-      {/* User */}
+      <Route
+        path="/interview"
+        element={
+          <ProtectedRoute><Interview /></ProtectedRoute>
+        }
+      />
 
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute><Profile /></ProtectedRoute>
+        }
+      />
+
       <Route
         path="/notifications"
-        element={<Notifications />}
+        element={
+          <ProtectedRoute><Notifications /></ProtectedRoute>
+        }
       />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/help" element={<Help />} />
+
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute><Settings /></ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/help"
+        element={
+          <ProtectedRoute><Help /></ProtectedRoute>
+        }
+      />
 
     </Routes>
   );

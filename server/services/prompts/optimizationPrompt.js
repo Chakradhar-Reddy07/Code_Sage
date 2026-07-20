@@ -1,4 +1,4 @@
-const { generateJSON } = require("../geminiJsonHelper");
+const { generateJSON } = require("../aiJsonHelper");
 
 const buildOptimizationPrompt = (language, code) => `
 You are CodeSage, a senior ${language} optimization engineer.

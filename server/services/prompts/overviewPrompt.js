@@ -1,4 +1,4 @@
-const { generateJSON } = require("../geminiJsonHelper");
+const { generateJSON } = require("../aiJsonHelper");
 
 const buildOverviewPrompt = (language, code) => `
 You are CodeSage, a senior code reviewer.
