@@ -8,7 +8,7 @@ function Hero() {
 
       <BackgroundGlow />
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-8 pt-32">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-8">
 
         <div className="grid lg:grid-cols-[42%_58%] min-h-screen items-center gap-6">
 
