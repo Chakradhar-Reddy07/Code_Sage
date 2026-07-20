@@ -5,3 +5,5 @@
 
 # Server environment file
 server/.env
+
+node_modules
