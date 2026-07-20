@@ -3,6 +3,7 @@ const generateBugs = require("./prompts/bugsPrompt");
 const generateComplexity = require("./prompts/complexityPrompt");
 const generateOptimization = require("./prompts/optimizationPrompt");
 const generateLearning = require("./prompts/learningPrompt");
+const generateFix = require("./prompts/fixPrompt");
 const validateAIResponse = require("../utils/validateAiResponse");
 
 const reviewSections = [
@@ -68,6 +69,17 @@ const reviewCode = async (language, code) => {
   );
 
   const validatedReview = validateAIResponse(mergedReview);
+
+  if (validatedReview.bugs.length > 0 && (!validatedReview.optimized_code || validatedReview.optimized_code === code)) {
+    try {
+      const fixResult = await generateFix(language, code, validatedReview.bugs);
+      validatedReview.optimized_code = fixResult.optimized_code || validatedReview.optimized_code;
+      validatedReview.changes_made = fixResult.changes_made || validatedReview.changes_made;
+      console.log("Final Fix Completed");
+    } catch (error) {
+      console.error("Final Fix failed:", error.message);
+    }
+  }
 
   console.log("Review Finished");
 

@@ -1,7 +1,19 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "../../hooks/useAuth";
+import ConfirmDialog from "../ui/ConfirmDialog";
 
 function Navbar() {
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+  const [showLogout, setShowLogout] = useState(false);
+
+  const confirmLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -40 }}
@@ -76,47 +88,114 @@ function Navbar() {
 
             <div className="flex items-center gap-3">
 
-              <Link to="/login">
+              {isAuthenticated ? (
 
-                <button
-                  className="
-                    px-6
-                    py-2.5
-                    rounded-full
-                    text-white
-                    border
-                    border-white/10
-                    hover:bg-white/5
-                    transition
-                  "
-                >
-                  Login
-                </button>
+                <>
 
-              </Link>
+                  <Link to="/dashboard">
 
-              <Link to="/signup">
+                    <button
+                      className="
+                        px-6
+                        py-2.5
+                        rounded-full
+                        bg-gradient-to-r
+                        from-violet-600
+                        to-blue-600
+                        text-white
+                        font-semibold
+                        transition-all
+                        duration-300
+                        hover:scale-105
+                        hover:shadow-[0_10px_35px_rgba(139,92,246,.45)]
+                      "
+                    >
+                      Dashboard
+                    </button>
 
-                <button
-                  className="
-                    px-7
-                    py-2.5
-                    rounded-full
-                    bg-gradient-to-r
-                    from-violet-600
-                    to-blue-600
-                    text-white
-                    font-semibold
-                    transition-all
-                    duration-300
-                    hover:scale-105
-                    hover:shadow-[0_10px_35px_rgba(139,92,246,.45)]
-                  "
-                >
-                  Get Started
-                </button>
+                  </Link>
 
-              </Link>
+                  <span className="text-slate-300 text-sm">
+                    {user?.name}
+                  </span>
+
+                  <button
+                    onClick={() => setShowLogout(true)}
+                    className="
+                      px-4
+                      py-2
+                      rounded-full
+                      text-slate-400
+                      border
+                      border-white/10
+                      hover:text-white
+                      hover:bg-white/5
+                      transition
+                      text-sm
+                    "
+                  >
+                    Logout
+                  </button>
+
+                  <ConfirmDialog
+                    isOpen={showLogout}
+                    title="Logout"
+                    message="Are you sure you want to log out?"
+                    onConfirm={confirmLogout}
+                    onCancel={() => setShowLogout(false)}
+                  />
+
+                </>
+
+              ) : (
+
+                <>
+
+                  <Link to="/login">
+
+                    <button
+                      className="
+                        px-6
+                        py-2.5
+                        rounded-full
+                        text-white
+                        border
+                        border-white/10
+                        hover:bg-white/5
+                        transition
+                      "
+                    >
+                      Login
+                    </button>
+
+                  </Link>
+
+                  <Link to="/signup">
+
+                    <button
+                      className="
+                        px-7
+                        py-2.5
+                        rounded-full
+                        bg-gradient-to-r
+                        from-violet-600
+                        to-blue-600
+                        text-white
+                        font-semibold
+                        transition-all
+                        duration-300
+                        hover:scale-105
+                        hover:shadow-[0_10px_35px_rgba(139,92,246,.45)]
+                      "
+                    >
+                      Get Started
+                    </button>
+
+                  </Link>
+
+                </>
+
+              )}
 
             </div>
 

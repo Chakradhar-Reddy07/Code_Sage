@@ -1,4 +1,4 @@
-const { generateJSON } = require("../geminiJsonHelper");
+const { generateJSON } = require("../aiJsonHelper");
 
 const buildComplexityPrompt = (language, code) => `
 You are CodeSage, an algorithms and complexity expert.

@@ -11,12 +11,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
       <SidebarProvider>
+        <Toaster />
 
-<Toaster />
-
-<App />
-
+        <App />
       </SidebarProvider>
     </AuthProvider>
-  </BrowserRouter>
+  </BrowserRouter>,
 );

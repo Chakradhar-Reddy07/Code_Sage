@@ -1,4 +1,5 @@
-import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Code2,
@@ -8,10 +9,13 @@ import {
   BarChart3,
   Settings,
   User,
- Bell,
+  Bell,
   LifeBuoy,
+  LogOut,
 } from "lucide-react";
 import { useSidebar } from "../../hooks/useSidebar";
+import { useAuth } from "../../hooks/useAuth";
+import ConfirmDialog from "../ui/ConfirmDialog";
 
 const menu = [
   {
@@ -23,6 +27,7 @@ const menu = [
     icon: Code2,
     label: "Code Review",
     path: "/review",
+    exact: true,
   },
   {
     icon: History,
@@ -68,6 +73,14 @@ const menu = [
 
 function Sidebar() {
   const { open, closeSidebar } = useSidebar();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [showLogout, setShowLogout] = useState(false);
+
+  const confirmLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <>
@@ -110,9 +123,20 @@ function Sidebar() {
               {open ? "Sage" : "S"}
             </h2>
           </Link>
+
+          {open && user ? (
+            <div className="mt-6 rounded-2xl bg-white/5 px-4 py-3">
+              <p className="text-sm font-medium text-white truncate">
+                {user.name}
+              </p>
+              <p className="text-xs text-slate-400 truncate">
+                {user.email}
+              </p>
+            </div>
+          ) : null}
         </div>
 
-        <nav className={open ? "px-5" : "px-3 pt-5 lg:pt-2"}>
+        <nav className={open ? "px-5" : "px-3 pt-5 lg:pt-2"}> 
 
           {menu.map((item) => {
             const Icon = item.icon;
@@ -122,6 +146,7 @@ function Sidebar() {
                 key={item.label}
                 to={item.path}
                 title={item.label}
+                end={item.exact}
                 onClick={() => {
                   if (window.innerWidth < 1024) {
                     closeSidebar();
@@ -147,6 +172,30 @@ function Sidebar() {
           })}
 
         </nav>
+
+        <div className={open ? "px-5 pb-6" : "flex justify-center px-3 pb-6"}>
+          <button
+            onClick={() => setShowLogout(true)}
+            title="Logout"
+            className={`flex items-center rounded-2xl py-4 text-slate-400 transition-all hover:text-red-400 ${
+              open
+                ? "w-full gap-4 px-5"
+                : "justify-center px-0"
+            }`}
+          >
+            <LogOut size={22} />
+
+            {open ? <span>Logout</span> : null}
+          </button>
+        </div>
+
+        <ConfirmDialog
+          isOpen={showLogout}
+          title="Logout"
+          message="Are you sure you want to log out?"
+          onConfirm={confirmLogout}
+          onCancel={() => setShowLogout(false)}
+        />
       </aside>
     </>
   );
