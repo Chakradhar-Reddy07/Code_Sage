@@ -2,14 +2,20 @@ import {
   Copy,
   Trash2,
   FileCode,
+  Play,
+  Loader2,
 } from "lucide-react";
 
 import toast from "react-hot-toast";
+import { createReview } from "../../services/review";
 
 function EditorToolbar({
   language,
   code,
   setCode,
+  setReview,
+  loading,
+  setLoading,
 }) {
   const fileNames = {
     java: "Main.java",
@@ -32,6 +38,34 @@ function EditorToolbar({
     toast.success("Editor cleared.");
   };
 
+  const handleReview = async () => {
+    if (!code.trim()) {
+      toast.error("Please enter some code.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await createReview(
+        language,
+        code
+      );
+
+      setReview(response.review);
+
+      toast.success("Review completed!");
+
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+          "Review failed."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex items-center justify-between border-b border-white/10 bg-[#111827] px-5 py-3">
 
@@ -51,6 +85,20 @@ function EditorToolbar({
       </div>
 
       <div className="flex gap-3">
+
+      <button
+        onClick={handleReview}
+        disabled={loading}
+        className="flex items-center justify-center rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 p-2"
+        style={{ width: 40, height: 40 }}
+        aria-label="Review Code"
+      >
+        {loading ? (
+          <Loader2 size={18} className="animate-spin text-white" />
+        ) : (
+          <Play size={18} className="text-white ml-0.5" />
+        )}
+      </button>
 
         <button
           onClick={copyCode}

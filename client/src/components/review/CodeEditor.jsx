@@ -18,49 +18,35 @@ function CodeEditor({
 }) {
   return (
     <div className="rounded-3xl border border-white/10 bg-[#0B1120] overflow-hidden">
-
       <div className="p-6">
-
-        <LanguageSelector
-          language={language}
-          setLanguage={setLanguage}
-        />
-
+        <LanguageSelector language={language} setLanguage={setLanguage} />
       </div>
 
-      <EditorToolbar
-        language={language}
-        code={code}
-        setCode={setCode}
-      />
+      <EditorToolbar language={language} code={code} setCode={setCode} setReview={setReview} loading={loading} setLoading={setLoading} />
 
       <Editor
-  height="min(68vh, 720px)"
-  language={language}
-  value={code}
-  onMount={(editor) => {
-    editorRef.current = editor;
-  }}
-  onChange={(value) => setCode(value || "")}
-  theme="vs-dark"
-  options={{
-    minimap: {
-      enabled: false,
-    },
-    automaticLayout: true,
-    fontSize: 15,
-    scrollBeyondLastLine: false,
-    wordWrap: "on",
-  }}
-/>
-
-      <EditorStatusBar
+        height="min(68vh, 720px)"
         language={language}
-        code={code}
+        value={code}
+        onMount={(editor) => {
+          editorRef.current = editor;
+        }}
+        onChange={(value) => setCode(value || "")}
+        theme="vs-dark"
+        options={{
+          minimap: {
+            enabled: false,
+          },
+          automaticLayout: true,
+          fontSize: 15,
+          scrollBeyondLastLine: false,
+          wordWrap: "on",
+        }}
       />
 
-      <div className="p-6">
+      <EditorStatusBar language={language} code={code} />
 
+      <div className="p-6">
         <ReviewControls
           language={language}
           code={code}
@@ -69,9 +55,7 @@ function CodeEditor({
           loading={loading}
           setLoading={setLoading}
         />
-
       </div>
-
     </div>
   );
 }
