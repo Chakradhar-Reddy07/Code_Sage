@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
@@ -18,9 +18,9 @@ function Signup() {
   const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
 
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  useEffect(() => {
+    if (isAuthenticated) navigate("/dashboard", { replace: true });
+  }, [isAuthenticated, navigate]);
 
   const {
     register,
