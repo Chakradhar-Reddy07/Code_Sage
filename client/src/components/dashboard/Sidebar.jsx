@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 import { useSidebar } from "../../hooks/useSidebar";
 import { useAuth } from "../../hooks/useAuth";
+import ConfirmDialog from "../ui/ConfirmDialog";
 
 const menu = [
   {
@@ -73,8 +75,9 @@ function Sidebar() {
   const { open, closeSidebar } = useSidebar();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [showLogout, setShowLogout] = useState(false);
 
-  const handleLogout = () => {
+  const confirmLogout = () => {
     logout();
     navigate("/");
   };
@@ -172,7 +175,7 @@ function Sidebar() {
 
         <div className={open ? "px-5 pb-6" : "flex justify-center px-3 pb-6"}>
           <button
-            onClick={handleLogout}
+            onClick={() => setShowLogout(true)}
             title="Logout"
             className={`flex items-center rounded-2xl py-4 text-slate-400 transition-all hover:text-red-400 ${
               open
@@ -185,6 +188,14 @@ function Sidebar() {
             {open ? <span>Logout</span> : null}
           </button>
         </div>
+
+        <ConfirmDialog
+          isOpen={showLogout}
+          title="Logout"
+          message="Are you sure you want to log out?"
+          onConfirm={confirmLogout}
+          onCancel={() => setShowLogout(false)}
+        />
       </aside>
     </>
   );

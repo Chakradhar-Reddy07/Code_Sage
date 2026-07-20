@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../../hooks/useAuth";
+import ConfirmDialog from "../ui/ConfirmDialog";
 
 function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const [showLogout, setShowLogout] = useState(false);
 
-  const handleLogout = () => {
+  const confirmLogout = () => {
     logout();
     navigate("/");
   };
@@ -117,7 +120,7 @@ function Navbar() {
                   </span>
 
                   <button
-                    onClick={handleLogout}
+                    onClick={() => setShowLogout(true)}
                     className="
                       px-4
                       py-2
@@ -133,6 +136,14 @@ function Navbar() {
                   >
                     Logout
                   </button>
+
+                  <ConfirmDialog
+                    isOpen={showLogout}
+                    title="Logout"
+                    message="Are you sure you want to log out?"
+                    onConfirm={confirmLogout}
+                    onCancel={() => setShowLogout(false)}
+                  />
 
                 </>
 
